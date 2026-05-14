@@ -15,10 +15,6 @@ public class CarService {
     }
 
     public Car findCarById(UUID carId) {
-        Car car =  carDao.findCarById(carId);
-        if (car == null) {
-            throw new IllegalArgumentException("Car doesn't exist");
-        }
-        return car;
+        return carDao.findCarById(carId);
     }
 }

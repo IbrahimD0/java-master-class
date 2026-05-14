@@ -53,39 +53,18 @@ public class CarBookingFileDataAccessService implements BookingDao {
     }
 
     @Override
-    public Booking findBookingById(UUID bookingId) {
-        Booking[] bookings = getBookings();
-        for (Booking booking : bookings) {
-            if (booking.getBookingId().equals(bookingId)) {
-                return booking;
-            }
-        }
-        throw new IllegalStateException("Booking doesn't exist");
-    }
-
-    public int findBookingIndexById(UUID bookingId) {
-        Booking[] bookings = getBookings();
-        for (int i = 0; i < bookings.length; i++) {
-            if (bookings[i].getBookingId().equals(bookingId)) {
-                return i;
-            }
-        }
-        throw new IllegalStateException("Booking doesn't exist");
-    }
-
-    @Override
     public void deleteBooking(UUID bookingId) {
         Booking[] bookings = getBookings();
         int amountToKeep = 0;
         for (Booking booking : bookings) {
-            if (!booking.getBookingId().equals(bookingId)) {
+            if (booking != null && !booking.getBookingId().equals(bookingId)) {
                 amountToKeep++;
             }
         }
         Booking[] updatedBookings = new Booking[amountToKeep];
         int index = 0;
         for (Booking booking : bookings) {
-            if (!booking.getBookingId().equals(bookingId)) {
+            if (booking != null && !booking.getBookingId().equals(bookingId)) {
                 updatedBookings[index] = booking;
                 index++;
             }

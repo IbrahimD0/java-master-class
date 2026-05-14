@@ -47,26 +47,21 @@ public class CarBookingArrayDataAccessService implements BookingDao {
         }
     }
 
-    public Booking findBookingById(UUID bookingId){
-        for (Booking booking : bookings) {
-            if (booking.getBookingId().equals(bookingId)) {
-                return booking;
-            }
-        }
-        throw new IllegalStateException("Booking doesn't exist");
-    }
-
     public int findBookingIndexById(UUID bookingId){
         for (int i = 0; i < bookings.length; i++) {
-            if (bookings[i].getBookingId().equals(bookingId)) {
+            if (bookings[i] != null && bookings[i].getBookingId().equals(bookingId)) {
                 return i;
             }
         }
-        throw new IllegalStateException("Booking doesn't exist");
+        return -1;
     }
 
+    @Override
     public void deleteBooking(UUID bookingId) {
         int toBeDeletedBookingIdx = findBookingIndexById(bookingId);
+        if(toBeDeletedBookingIdx == -1){
+            return;
+        }
         bookings[toBeDeletedBookingIdx] = null;
     }
 }
